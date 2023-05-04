@@ -1,0 +1,48 @@
+type Query {
+  jobs: [Job]
+  job(id: ID!): Job
+  company(id: ID!): Company
+}
+
+type Mutation {
+  createJob(input: CreateJobInput!): Job
+  login(input: AuthInput!): AuthPayload
+  signup(input: AuthInput!): AuthPayload
+}
+
+type Company {
+  id: ID!
+  name: String!
+  description: String
+  jobs: [Job!]
+}
+
+type Job {
+  id: ID!
+  title: String!
+  description: String
+  date: String!
+  company: Company!
+}
+
+type suspended {
+  reason: String
+}
+
+# defining custom input type
+input CreateJobInput {
+  title: String!
+  description: String!
+}
+
+#for auth purpose
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+#return type after auth
+type AuthPayload {
+  token: String!
+}
+union JobResult = Job | suspended
